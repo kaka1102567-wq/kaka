@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  gateway:
+    image: nousresearch/hermes-agent:v0.16.0
+    container_name: hermes-gateway
+    restart: unless-stopped
+    ports:
+      - "8642:8642"
+    environment:
+      - HERMES_ROLE=gateway
+    volumes:
+      - hermes-gateway-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8642/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  dashboard:
+    image: nousresearch/hermes-agent:v0.16.0
+    container_name: hermes-dashboard
+    restart: unless-stopped
+    ports:
+      - "9120:9120"
+    environment:
+      - HERMES_ROLE=dashboard
+      - HERMES_GATEWAY_URL=http://gateway:8642
+    volumes:
+      - hermes-dashboard-data:/data
+    depends_on:
+      gateway:
+        condition: service_healthy
+
+volumes:
+  hermes-gateway-data:
+  hermes-dashboard-data:
