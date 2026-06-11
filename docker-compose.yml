@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   gateway:
-    image: nousresearch/hermes-agent:v0.16.0
+    image: nousresearch/hermes-agent:v2026.6.5
     container_name: hermes-gateway
     restart: unless-stopped
     ports:
@@ -19,7 +19,7 @@ services:
       start_period: 15s
 
   dashboard:
-    image: nousresearch/hermes-agent:v0.16.0
+    image: nousresearch/hermes-agent:v2026.6.5
     container_name: hermes-dashboard
     restart: unless-stopped
     ports:

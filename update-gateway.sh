@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Update Hermes gateway to v0.16.0 and restart
+# Update Hermes gateway to v0.16.0 (tag v2026.6.5 - The Surface Release) and restart
 
 set -euo pipefail
 
-HERMES_VERSION="v0.16.0"
+HERMES_VERSION="v2026.6.5"
 
 echo "==> Pulling Hermes Agent ${HERMES_VERSION}..."
 docker compose pull
