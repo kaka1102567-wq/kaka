@@ -21,7 +21,7 @@ class IntervalsClient:
     def __init__(self, athlete_id: str | None = None, api_key: str | None = None):
         self.athlete_id = athlete_id or os.environ.get("INTERVALS_ATHLETE_ID", "")
         if not self.athlete_id:
-            raise ValueError("Set INTERVALS_ATHLETE_ID (e.g. i792748)")
+            raise ValueError("Set INTERVALS_ATHLETE_ID (e.g. i123456)")
         self.api_key = api_key if api_key is not None else os.environ.get("INTERVALS_API_KEY")
 
     def _get(self, path: str, params: dict | None = None):

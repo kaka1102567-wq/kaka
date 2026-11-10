@@ -8,17 +8,33 @@ Suunto ──→ Intervals.icu ──(API)──→ health_coach.daily ──→
              └ ngủ, HRV, nhịp tim nghỉ, CTL/ATL
 ```
 
-## Chạy
+## Cài trên máy Mac (chạy tự động mỗi sáng)
 
 ```bash
-export INTERVALS_ATHLETE_ID=i792748
+git clone https://github.com/<user>/health-coach.git ~/health-coach
+cd ~/health-coach && ./mac/install.sh
+```
+
+Script sẽ hỏi Athlete ID, Intervals API key, Telegram bot token, Chat ID và **lưu vào macOS Keychain**
+(không ghi ra file), rồi cài lịch launchd chạy **05:47** mỗi ngày và gửi thử 1 báo cáo.
+
+- Đổi giờ: `COACH_HOUR=6 COACH_MINUTE=10 ./mac/install.sh`
+- Log (không chứa số liệu sức khoẻ): `~/Library/Logs/health-coach.log`
+- Chạy tay: `./mac/run.sh` · Gỡ: `./mac/uninstall.sh`
+- Mac đang **ngủ** lúc 05:47 → launchd chạy bù ngay khi máy thức. Mac **tắt hẳn** → bỏ lỡ hôm đó.
+  Muốn Mac tự thức: `sudo pmset repeat wakeorpoweron MTWRFSU 05:45:00`
+
+## Chạy tay (mọi máy)
+
+```bash
+export INTERVALS_ATHLETE_ID=i123456
 export INTERVALS_API_KEY=...        # bỏ qua nếu proxy của môi trường tự gắn khoá
 python -m health_coach.daily              # in báo cáo
 python -m health_coach.daily --json       # in kèm số liệu
 python -m health_coach.daily --telegram   # gửi Telegram (cần TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
 ```
 
-Không cần thư viện ngoài (chỉ dùng Python 3.9+ stdlib).
+Không cần thư viện ngoài (chỉ dùng Python 3.9+ stdlib — Python có sẵn trên macOS là đủ).
 
 ## Quy tắc (v1, chỉnh trong `RULES` ở `coach.py`)
 
@@ -35,5 +51,5 @@ Không cần thư viện ngoài (chỉ dùng Python 3.9+ stdlib).
 ## Test
 
 ```bash
-python -m unittest discover -s health_coach/tests -t .
+python3 -m unittest discover -s health_coach/tests -t .
 ```
