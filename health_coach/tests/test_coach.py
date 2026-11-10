@@ -55,7 +55,14 @@ class AssessTests(unittest.TestCase):
         self.assertEqual(rd.metrics["consecutive_training_days"], 4)
         self.assertEqual(rd.level, "YELLOW")
 
+    def test_easy_cap_override(self):
+        self.assertEqual(easy_hr_cap(None), 145)
+
     def test_easy_cap_from_run_zones(self):
+        from health_coach import coach
+        saved = coach.RULES["easy_hr_cap_override"]
+        coach.RULES["easy_hr_cap_override"] = None
+        self.addCleanup(coach.RULES.__setitem__, "easy_hr_cap_override", saved)
         athlete = {"sportSettings": [{"types": ["Run"], "hr_zones": [141, 150, 158]}]}
         self.assertEqual(easy_hr_cap(athlete), 150)
         self.assertEqual(easy_hr_cap(None), 150)

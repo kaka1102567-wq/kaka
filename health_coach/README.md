@@ -30,7 +30,7 @@ Không cần thư viện ngoài (chỉ dùng Python 3.9+ stdlib).
 
 - **Mốc** = trung bình 7 đêm gần nhất *có dữ liệu* (cần tối thiểu 3 đêm).
 - **Đêm không có dữ liệu = không đeo đồng hồ**, bị bỏ qua chứ không tính là 0.
-- Ngưỡng nhịp tim "chạy dễ" lấy từ đỉnh vùng Z2 (Aerobic) của môn Run trong Intervals.
+- Ngưỡng nhịp tim "chạy dễ" giai đoạn xây nền: **145** (`easy_hr_cap_override`, khớp Vùng 2 = 130–145 trên Suunto). Đặt `None` để lấy đỉnh Z2 môn Run trong Intervals.
 
 ## Test
 

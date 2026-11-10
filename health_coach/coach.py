@@ -29,6 +29,9 @@ RULES = {
     "min_steps_worn": 500,       # fewer steps than this -> watch likely not worn
     "hot_temp_c": 30.0,
     "default_easy_hr_cap": 150,
+    # Aerobic base phase: run until HR hits this, then walk (Suunto Zone 2 = 130-145).
+    # Set to None to fall back to the top of the Intervals Run Z2.
+    "easy_hr_cap_override": 145,
 }
 
 RUN_TYPES = {"Run", "VirtualRun", "TrailRun"}
@@ -57,7 +60,9 @@ def _baseline(values: list[float], n: int, min_n: int):
 
 
 def easy_hr_cap(athlete: dict | None) -> int:
-    """Top of the athlete's Run HR zone 2 (Aerobic) from Intervals settings."""
+    """Easy-run HR ceiling: explicit override, else top of Intervals Run Z2."""
+    if RULES.get("easy_hr_cap_override"):
+        return int(RULES["easy_hr_cap_override"])
     for s in (athlete or {}).get("sportSettings", []) or []:
         if "Run" in (s.get("types") or []) and s.get("hr_zones"):
             zones = s["hr_zones"]
